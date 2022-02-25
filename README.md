@@ -7,7 +7,7 @@ This project gather requests shared by a vocal client and a vocal server. Indeed
 First you need to download this project on your computer. To do so, you can use the following command line :
 
 ```git
-git clone https://github.com/Pierre-Emmanuel41/vocal-common.git --recursive
+git clone -b 1.0-SNAPSHOT https://github.com/Pierre-Emmanuel41/vocal-common.git --recursive
 ```
 
 and then double click on the deploy.bat file. This will deploy this project and all its dependencies on your computer. Which means it generates the folder associated to this project and its dependencies in your .m2 folder. Once this has been done, you can add the project as maven dependency on your maven project :
