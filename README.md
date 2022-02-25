@@ -69,7 +69,7 @@ Payload structure when sent: Request ignored.
 
 Payload structure when received:
 
-![plot](./src/main/java/resources/PlayerSpeak_set.png)
+![plot](./src/main/java/resources/PlayerSpeak_Set.png)
 
 The combination of the player name length and player name correspond to the player that is currently speaking. The combination audio signal length and audio signal correspond to the audio signal the client associated to the player is sending to the server.  
 The global volume correspond to the global volume of the audio signal calculated by the server. The left and right volume correspond to the stereo effect of the signal. Those two values are also calculated by the server.
