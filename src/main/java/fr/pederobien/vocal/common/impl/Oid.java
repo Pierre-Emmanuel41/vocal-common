@@ -3,7 +3,7 @@ package fr.pederobien.vocal.common.impl;
 import fr.pederobien.utils.ByteWrapper;
 
 public enum Oid {
-	SET, INFO, UNKNOWN(-1);
+	INFO, SET, UNKNOWN(-1);
 
 	private static int codeGenerator;
 	private int code;
