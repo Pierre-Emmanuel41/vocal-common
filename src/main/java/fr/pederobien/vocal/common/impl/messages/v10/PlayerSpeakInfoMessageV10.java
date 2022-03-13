@@ -2,7 +2,7 @@ package fr.pederobien.vocal.common.impl.messages.v10;
 
 import fr.pederobien.messenger.interfaces.IMessage;
 import fr.pederobien.utils.ByteWrapper;
-import fr.pederobien.vocal.common.impl.VocalProtocolManager;
+import fr.pederobien.vocal.common.impl.VocalIdentifier;
 import fr.pederobien.vocal.common.impl.messages.VocalMessage;
 import fr.pederobien.vocal.common.interfaces.IVocalHeader;
 
@@ -16,7 +16,7 @@ public class PlayerSpeakInfoMessageV10 extends VocalMessage {
 	 * @param header The message header.
 	 */
 	protected PlayerSpeakInfoMessageV10(IVocalHeader header) {
-		super(VocalProtocolManager.PLAYER_SPEAK_INFO, header);
+		super(VocalIdentifier.PLAYER_SPEAK_INFO, header);
 	}
 
 	@Override

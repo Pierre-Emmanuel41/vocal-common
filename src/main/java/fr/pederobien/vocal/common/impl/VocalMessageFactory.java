@@ -26,14 +26,13 @@ public class VocalMessageFactory {
 	/**
 	 * Create a message based on the given parameters.
 	 * 
-	 * @param idc     The message idc.
-	 * @param oid     The message oid.
-	 * @param payload The message payload.
+	 * @param identifier the request identifier.
+	 * @param properties The message properties.
 	 * 
 	 * @return The created message.
 	 */
-	public IVocalMessage create(Idc idc, Oid oid, Object... payload) {
-		return (IVocalMessage) manager.create(idc, oid, payload);
+	public IVocalMessage create(VocalIdentifier identifier, Object... properties) {
+		return (IVocalMessage) manager.create(identifier, properties);
 	}
 
 	/**
@@ -51,13 +50,12 @@ public class VocalMessageFactory {
 	 * Creates a new message corresponding to the answer of the <code>message</code>. The identifier is not incremented.
 	 * 
 	 * @param message    The message to answer.
-	 * @param idc        The response IDC.
-	 * @param oid        The response OID.
+	 * @param identifier The response identifier.
 	 * @param properties The response properties.
 	 * 
 	 * @return The message associated to the answer.
 	 */
-	public IVocalMessage answer(IVocalMessage message, Idc idc, Oid oid, Object... properties) {
-		return (IVocalMessage) manager.answer(message.getHeader().getSequence(), idc, oid, properties);
+	public IVocalMessage answer(IVocalMessage message, VocalIdentifier identifier, Object... properties) {
+		return (IVocalMessage) manager.answer(message.getHeader().getSequence(), identifier, properties);
 	}
 }

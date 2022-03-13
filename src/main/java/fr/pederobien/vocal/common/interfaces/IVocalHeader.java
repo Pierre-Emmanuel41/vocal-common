@@ -1,18 +1,12 @@
 package fr.pederobien.vocal.common.interfaces;
 
 import fr.pederobien.messenger.interfaces.IHeader;
-import fr.pederobien.vocal.common.impl.Idc;
-import fr.pederobien.vocal.common.impl.Oid;
+import fr.pederobien.vocal.common.impl.VocalIdentifier;
 
 public interface IVocalHeader extends IHeader {
 
 	/**
-	 * @return The header idc.
+	 * @return The identifier associated to this request.
 	 */
-	Idc getIdc();
-
-	/**
-	 * @return The header oid.
-	 */
-	Oid getOid();
+	VocalIdentifier getIdentifier();
 }

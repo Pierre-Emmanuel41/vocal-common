@@ -5,31 +5,27 @@ import fr.pederobien.utils.ByteWrapper;
 import fr.pederobien.vocal.common.interfaces.IVocalHeader;
 
 public class VocalHeader extends Header implements IVocalHeader {
-	private Idc idc;
-	private Oid oid;
+	private VocalIdentifier identifier;
 
 	/**
-	 * Creates a new header associated to the given version. The value of the Idc is {@link Idc#UNKNOWN}, the Oid is
-	 * {@link Oid#UNKNOWN}.
+	 * Creates a new header associated to the given version. The value of the identifier is {@link VocalIdentifier#UNKNOWN}.
 	 * 
 	 * @param version The protocol version used to create this header.
 	 */
 	public VocalHeader(float version) {
 		super(version);
-		idc = Idc.UNKNOWN;
-		oid = Oid.UNKNOWN;
+		identifier = VocalIdentifier.UNKNOWN;
 	}
 
 	@Override
 	public void setProperties(Object... properties) {
 		super.setProperties(properties);
-		idc = (Idc) properties[0];
-		oid = (Oid) properties[1];
+		identifier = (VocalIdentifier) properties[0];
 	}
 
 	@Override
 	protected byte[] generateProperties() {
-		return ByteWrapper.create().put(idc.getBytes()).put(oid.getBytes()).get();
+		return ByteWrapper.create().put(identifier.getBytes()).get();
 	}
 
 	@Override
@@ -37,23 +33,15 @@ public class VocalHeader extends Header implements IVocalHeader {
 		super.parse(buffer);
 		ByteWrapper wrapper = ByteWrapper.wrap(buffer);
 
-		// +8: Idc
-		idc = Idc.fromCode(wrapper.getInt(8));
+		// +8: Identifier
+		identifier = VocalIdentifier.fromCode(wrapper.getInt(8));
 
-		// +12: Oid
-		oid = Oid.fromCode(wrapper.getInt(12));
-		super.setProperties(idc, oid);
+		super.setProperties(identifier);
 		return this;
 	}
 
 	@Override
-	public Idc getIdc() {
-		return idc;
+	public VocalIdentifier getIdentifier() {
+		return identifier;
 	}
-
-	@Override
-	public Oid getOid() {
-		return oid;
-	}
-
 }
