@@ -81,7 +81,7 @@ public class VocalProtocolManager {
 		if (message == null)
 			return null;
 
-		message.getHeader().setIdentifier(identifier);
+		message.getHeader().setSequence(identifier);
 		message.getHeader().setProperties(idc, oid);
 		message.setProperties(properties);
 		return message;

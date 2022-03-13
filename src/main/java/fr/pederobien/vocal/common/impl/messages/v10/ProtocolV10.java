@@ -13,7 +13,7 @@ public class ProtocolV10 extends Protocol {
 	 * @param mumbleManager The manager associated to this protocol.
 	 */
 	public ProtocolV10(VocalProtocolManager mumbleManager) {
-		super(mumbleManager.getManager().getIdentifiers(), 1.0f, mumbleManager.getManager().getHeader(), mumbleManager.getManager().getParser());
+		super(mumbleManager.getManager().getSequence(), 1.0f, mumbleManager.getManager().getHeader(), mumbleManager.getManager().getParser());
 
 		register(new MessageCreator(VocalProtocolManager.PLAYER_SPEAK_INFO, header -> new PlayerSpeakInfoMessageV10((IVocalHeader) header)));
 		register(new MessageCreator(VocalProtocolManager.PLAYER_SPEAK_SET, header -> new PlayerSpeakSetMessageV10((IVocalHeader) header)));

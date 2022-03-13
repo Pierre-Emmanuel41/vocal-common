@@ -58,6 +58,6 @@ public class VocalMessageFactory {
 	 * @return The message associated to the answer.
 	 */
 	public IVocalMessage answer(IVocalMessage message, Idc idc, Oid oid, Object... properties) {
-		return (IVocalMessage) manager.answer(message.getHeader().getIdentifier(), idc, oid, properties);
+		return (IVocalMessage) manager.answer(message.getHeader().getSequence(), idc, oid, properties);
 	}
 }
