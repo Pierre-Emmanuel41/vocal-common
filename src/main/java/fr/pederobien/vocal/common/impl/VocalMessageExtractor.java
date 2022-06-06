@@ -7,12 +7,10 @@ import java.util.List;
 import java.util.Map;
 
 import fr.pederobien.communication.interfaces.IAnswersExtractor;
+import fr.pederobien.messenger.impl.Header;
+import fr.pederobien.vocal.common.impl.messages.VocalMessage;
 
 public class VocalMessageExtractor implements IAnswersExtractor {
-	private static final int IDENTIFIER_INDEX = 8;
-	private static final int LENGTH_INDEX = 20;
-	private static final int HEADER_LENGTH = 8;
-
 	private byte[] remaining = new byte[0];
 
 	@Override
@@ -67,12 +65,12 @@ public class VocalMessageExtractor implements IAnswersExtractor {
 	}
 
 	private int getIdentifier(byte[] bytes) {
-		return toInt(bytes, IDENTIFIER_INDEX);
+		return toInt(bytes, Header.SEQUENCE_NUMBER_INDEX);
 	}
 
 	private int getLength(byte[] bytes) {
-		// SYNC_WORD + version + + identifier + header length + payload length + payload
-		return 4 + 4 + 4 + HEADER_LENGTH + 4 + toInt(bytes, LENGTH_INDEX);
+		// SYNC_WORD + header length + properties length + properties
+		return VocalMessage.BEGIN_WORD.length + VocalHeader.HEADER_LENGH + 4 + toInt(bytes, VocalMessage.LENGTH_INDEX);
 	}
 
 	private int toInt(byte[] bytes, int first) {

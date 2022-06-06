@@ -9,6 +9,16 @@ import fr.pederobien.vocal.common.interfaces.IVocalMessage;
 public abstract class VocalMessage extends Message implements IVocalMessage {
 
 	/**
+	 * The index at which there is the first byte of the message identifier.
+	 */
+	public static final int IDENTIFIER_INDEX = 12;
+
+	/**
+	 * The index at which there is the first byte of the message properties length.
+	 */
+	public static final int LENGTH_INDEX = 16;
+
+	/**
 	 * Creates a vocal message represented by a name and a vocal header. The message name is used for storage only but is never used
 	 * during the bytes generation.
 	 * 

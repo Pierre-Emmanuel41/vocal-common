@@ -5,6 +5,14 @@ import fr.pederobien.utils.ByteWrapper;
 import fr.pederobien.vocal.common.interfaces.IVocalHeader;
 
 public class VocalHeader extends Header implements IVocalHeader {
+	/**
+	 * The number of bytes reserved for the message header. It correspond to:</br>
+	 * </br>
+	 * +0: Communication protocol version.</br>
+	 * +4: The sequence number.</br>
+	 * +8: The identifier.</br>
+	 */
+	public static final int HEADER_LENGH = 12;
 	private VocalIdentifier identifier;
 
 	/**

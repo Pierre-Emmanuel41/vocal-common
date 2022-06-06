@@ -44,7 +44,10 @@ public class PlayerSpeakInfoMessageV10 extends VocalMessage {
 	public void setProperties(Object... properties) {
 		super.setProperties(properties);
 
+		// Player's name
 		playerName = (String) properties[0];
+
+		// Player's audio sample
 		data = (byte[]) properties[1];
 	}
 
