@@ -2,6 +2,7 @@ package fr.pederobien.vocal.common.impl;
 
 import fr.pederobien.messenger.impl.Header;
 import fr.pederobien.utils.ByteWrapper;
+import fr.pederobien.vocal.common.impl.messages.VocalMessage;
 import fr.pederobien.vocal.common.interfaces.IVocalHeader;
 
 public class VocalHeader extends Header implements IVocalHeader {
@@ -11,9 +12,11 @@ public class VocalHeader extends Header implements IVocalHeader {
 	 * +0: Communication protocol version.</br>
 	 * +4: The sequence number.</br>
 	 * +8: The identifier.</br>
+	 * +12: The error code.
 	 */
-	public static final int HEADER_LENGH = 12;
+	public static final int HEADER_LENGH = 16;
 	private VocalIdentifier identifier;
+	private VocalErrorCode errorCode;
 
 	/**
 	 * Creates a new header associated to the given version. The value of the identifier is {@link VocalIdentifier#UNKNOWN}.
@@ -23,12 +26,15 @@ public class VocalHeader extends Header implements IVocalHeader {
 	public VocalHeader(float version) {
 		super(version);
 		identifier = VocalIdentifier.UNKNOWN;
+		errorCode = VocalErrorCode.NONE;
 	}
 
 	@Override
 	public void setProperties(Object... properties) {
 		super.setProperties(properties);
+
 		identifier = (VocalIdentifier) properties[0];
+		errorCode = (VocalErrorCode) properties[0];
 	}
 
 	@Override
@@ -42,14 +48,21 @@ public class VocalHeader extends Header implements IVocalHeader {
 		ByteWrapper wrapper = ByteWrapper.wrap(buffer);
 
 		// +8: Identifier
-		identifier = VocalIdentifier.fromCode(wrapper.getInt(8));
+		identifier = VocalIdentifier.fromCode(wrapper.getInt(VocalMessage.IDENTIFIER_INDEX - VocalMessage.BEGIN_WORD.length));
 
-		super.setProperties(identifier);
+		// +12: ErrorCode
+		errorCode = VocalErrorCode.fromCode(wrapper.getInt(VocalMessage.ERROR_CODE_INDEX - VocalMessage.BEGIN_WORD.length));
+		super.setProperties(identifier, errorCode);
 		return this;
 	}
 
 	@Override
 	public VocalIdentifier getIdentifier() {
 		return identifier;
+	}
+
+	@Override
+	public VocalErrorCode getErrorCode() {
+		return errorCode;
 	}
 }
