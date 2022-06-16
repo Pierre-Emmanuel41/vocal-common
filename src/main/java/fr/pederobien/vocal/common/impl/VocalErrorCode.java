@@ -7,6 +7,27 @@ public enum VocalErrorCode {
 	// Code when no errors happened.
 	NONE("No error."),
 
+	// Code when a timeout occurs.
+	TIMEOUT("Request times out"),
+
+	// Code when player has not the permission to send the request
+	PERMISSION_REFUSED("Permission refused."),
+
+	// Code when an unexpected error attempt on the server.
+	UNEXPECTED_ERROR("An unexpected error occurs."),
+
+	// Code when the request is malformed
+	REQUEST_MALFORMED("The request is malformed."),
+
+	// Code when the version is not supported.
+	INCOMPATIBLE_VERSION("The protocol version is not supported"),
+
+	// Code when there are no treatment associated to the given identifier.
+	IDENTIFIER_UNKNOWN("There is no treatment associated to the given identifier."),
+
+	// Code when server plugins cancelled a request.
+	REQUEST_CANCELLED("The request has been cancelled by the server"),
+
 	// Code when cannot be parsed.
 	UNKNOWN(-1, "Cannot parse the error code.");
 
