@@ -6,6 +6,17 @@ import java.util.Map;
 import fr.pederobien.utils.ByteWrapper;
 
 public enum VocalIdentifier {
+
+	/**
+	 * Identifier of the message to get the versions of the communication protocol of the remote.
+	 */
+	GET_CP_VERSIONS,
+
+	/**
+	 * Identifier of the message to set the version of the communication protocol of the remote.
+	 */
+	SET_CP_VERSION,
+
 	// Identifier when a player speak request is sent to the server.
 	PLAYER_SPEAK_INFO,
 

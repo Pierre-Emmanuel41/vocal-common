@@ -16,6 +16,11 @@ public class ProtocolV10 extends Protocol {
 	public ProtocolV10(VocalProtocolManager mumbleManager) {
 		super(mumbleManager.getManager().getSequence(), 1.0f, mumbleManager.getManager().getHeader(), mumbleManager.getManager().getParser());
 
+		// Communication protocol messages
+		register(new MessageCreator(VocalIdentifier.GET_CP_VERSIONS.name(), header -> new GetCommunicationProtocolVersionsV10((IVocalHeader) header)));
+		register(new MessageCreator(VocalIdentifier.SET_CP_VERSION.name(), header -> new SetCommunicationProtocolVersionV10((IVocalHeader) header)));
+
+		// Audio messages
 		register(new MessageCreator(VocalIdentifier.PLAYER_SPEAK_INFO.name(), header -> new PlayerSpeakInfoMessageV10((IVocalHeader) header)));
 		register(new MessageCreator(VocalIdentifier.PLAYER_SPEAK_SET.name(), header -> new PlayerSpeakSetMessageV10((IVocalHeader) header)));
 	}
