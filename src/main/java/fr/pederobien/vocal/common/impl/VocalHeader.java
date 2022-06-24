@@ -34,12 +34,12 @@ public class VocalHeader extends Header implements IVocalHeader {
 		super.setProperties(properties);
 
 		identifier = (VocalIdentifier) properties[0];
-		errorCode = (VocalErrorCode) properties[0];
+		errorCode = (VocalErrorCode) properties[1];
 	}
 
 	@Override
 	protected byte[] generateProperties() {
-		return ByteWrapper.create().put(identifier.getBytes()).get();
+		return ByteWrapper.create().put(identifier.getBytes()).put(errorCode.getBytes()).get();
 	}
 
 	@Override

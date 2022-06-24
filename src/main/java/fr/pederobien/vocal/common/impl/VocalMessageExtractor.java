@@ -45,7 +45,7 @@ public class VocalMessageExtractor implements IAnswersExtractor {
 			byte[] bytes = buffers.get(i);
 			try {
 				int identifier = getIdentifier(bytes);
-				int length = getLength(bytes) + 2;
+				int length = getLength(bytes) + VocalMessage.END_WORD.length;
 				answers.put(identifier, extract(bytes, 0, length));
 			} catch (IndexOutOfBoundsException e) {
 				// If exception for the last index then last answer not complete.
