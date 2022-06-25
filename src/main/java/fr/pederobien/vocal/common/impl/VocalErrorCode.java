@@ -28,6 +28,9 @@ public enum VocalErrorCode {
 	// Code when server plugins cancelled a request.
 	REQUEST_CANCELLED("The request has been cancelled by the server"),
 
+	// Code when a client try to join a server whereas it has already joined the server
+	SERVER_ALREADY_JOINED("The client has already joined the server"),
+
 	// Code when cannot be parsed.
 	UNKNOWN(-1, "Cannot parse the error code.");
 

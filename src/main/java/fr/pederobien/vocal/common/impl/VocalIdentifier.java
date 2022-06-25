@@ -17,6 +17,16 @@ public enum VocalIdentifier {
 	 */
 	SET_CP_VERSION,
 
+	/*
+	 * Identifier of the message in order to join a vocal server.
+	 */
+	SET_SERVER_JOIN,
+
+	/**
+	 * Identifier of the message to get the server configuration.
+	 */
+	GET_SERVER_CONFIGURATION,
+
 	// Identifier when a player speak request is sent to the server.
 	PLAYER_SPEAK_INFO,
 
