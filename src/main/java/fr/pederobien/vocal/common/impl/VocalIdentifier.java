@@ -23,6 +23,11 @@ public enum VocalIdentifier {
 	SET_SERVER_JOIN,
 
 	/**
+	 * Identifier of the message to leave a vocal server.
+	 */
+	SET_SERVER_LEAVE,
+
+	/**
 	 * Identifier of the message to get the server configuration.
 	 */
 	GET_SERVER_CONFIGURATION,

@@ -23,6 +23,7 @@ public class ProtocolV10 extends Protocol {
 		// Server configuration
 		register(new MessageCreator(VocalIdentifier.GET_SERVER_CONFIGURATION.name(), header -> new GetServerConfigurationV10((IVocalHeader) header)));
 		register(new MessageCreator(VocalIdentifier.SET_SERVER_JOIN.name(), header -> new SetServerJoinV10((IVocalHeader) header)));
+		register(new MessageCreator(VocalIdentifier.SET_SERVER_LEAVE.name(), header -> new SetServerLeaveV10((IVocalHeader) header)));
 
 		// Audio messages
 		register(new MessageCreator(VocalIdentifier.PLAYER_SPEAK_INFO.name(), header -> new PlayerSpeakInfoMessageV10((IVocalHeader) header)));
