@@ -32,6 +32,16 @@ public enum VocalIdentifier {
 	 */
 	GET_SERVER_CONFIGURATION,
 
+	/**
+	 * Identifier of the message to register a player on a vocal server.
+	 */
+	REGISTER_PLAYER_ON_SERVER,
+
+	/**
+	 * Identifier of the message to unregister a player from a mumble server.
+	 */
+	UNREGISTER_PLAYER_FROM_SERVER,
+
 	// Identifier when a player speak request is sent to the server.
 	PLAYER_SPEAK_INFO,
 
