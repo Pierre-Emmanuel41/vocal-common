@@ -52,6 +52,11 @@ public enum VocalIdentifier {
 	 */
 	SET_PLAYER_MUTE,
 
+	/**
+	 * Identifier of the message to set the mute status of a player for another player.
+	 */
+	SET_PLAYER_MUTE_BY,
+
 	// Identifier when a player speak request is sent to the server.
 	PLAYER_SPEAK_INFO,
 
