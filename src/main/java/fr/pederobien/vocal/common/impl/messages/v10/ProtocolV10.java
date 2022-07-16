@@ -31,6 +31,7 @@ public class ProtocolV10 extends Protocol {
 		register(new MessageCreator(VocalIdentifier.SET_PLAYER_NAME.name(), header -> new SetPlayerNameV10((IVocalHeader) header)));
 		register(new MessageCreator(VocalIdentifier.SET_PLAYER_MUTE.name(), header -> new SetPlayerMuteStatusV10((IVocalHeader) header)));
 		register(new MessageCreator(VocalIdentifier.SET_PLAYER_MUTE_BY.name(), header -> new SetPlayerMuteByStatusV10((IVocalHeader) header)));
+		register(new MessageCreator(VocalIdentifier.SET_PLAYER_DEAFEN.name(), header -> new SetPlayerDeafenStatusV10((IVocalHeader) header)));
 
 		// Audio messages
 		register(new MessageCreator(VocalIdentifier.PLAYER_SPEAK_INFO.name(), header -> new PlayerSpeakInfoMessageV10((IVocalHeader) header)));

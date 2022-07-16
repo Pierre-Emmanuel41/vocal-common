@@ -57,6 +57,11 @@ public enum VocalIdentifier {
 	 */
 	SET_PLAYER_MUTE_BY,
 
+	/**
+	 * Identifier of the message to set the deafen status of a player.
+	 */
+	SET_PLAYER_DEAFEN,
+
 	// Identifier when a player speak request is sent to the server.
 	PLAYER_SPEAK_INFO,
 
