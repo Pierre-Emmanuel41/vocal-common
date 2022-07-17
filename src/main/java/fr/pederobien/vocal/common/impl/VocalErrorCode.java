@@ -1,8 +1,9 @@
 package fr.pederobien.vocal.common.impl;
 
+import fr.pederobien.messenger.interfaces.IErrorCode;
 import fr.pederobien.utils.ByteWrapper;
 
-public enum VocalErrorCode {
+public enum VocalErrorCode implements IErrorCode {
 
 	/**
 	 * Code when no errors happened.
@@ -85,20 +86,23 @@ public enum VocalErrorCode {
 	}
 
 	@Override
-	public String toString() {
-		return "ErrorCode={" + super.toString() + "," + code + "," + message + "}";
-	}
-
 	public byte[] getBytes() {
 		return bytes;
 	}
 
+	@Override
 	public int getCode() {
 		return code;
 	}
 
+	@Override
 	public String getMessage() {
 		return message;
+	}
+
+	@Override
+	public String toString() {
+		return "ErrorCode={" + super.toString() + "," + code + "," + message + "}";
 	}
 
 	/**
