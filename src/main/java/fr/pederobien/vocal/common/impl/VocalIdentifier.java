@@ -62,10 +62,14 @@ public enum VocalIdentifier {
 	 */
 	SET_PLAYER_DEAFEN,
 
-	// Identifier when a player speak request is sent to the server.
+	/**
+	 * Identifier of the message to send an audio sample to the server.
+	 */
 	PLAYER_SPEAK_INFO,
 
-	// Identifier when a player speak request is received from the server.
+	/**
+	 * Identifier of the message in order to play an audio sample.
+	 */
 	PLAYER_SPEAK_SET,
 
 	// Code when the identifier cannot be parsed.
