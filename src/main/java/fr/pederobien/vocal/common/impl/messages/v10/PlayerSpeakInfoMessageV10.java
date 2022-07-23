@@ -9,6 +9,7 @@ import fr.pederobien.vocal.common.interfaces.IVocalHeader;
 public class PlayerSpeakInfoMessageV10 extends VocalMessage {
 	private String playerName;
 	private byte[] data;
+	private boolean isMono, isEncoded;
 
 	/**
 	 * Creates a message representing an audio sample to dispatch on server side.
@@ -36,7 +37,15 @@ public class PlayerSpeakInfoMessageV10 extends VocalMessage {
 		data = wrapper.extract(first, playerDataLength);
 		first += playerDataLength;
 
-		super.setProperties(playerName, data);
+		// Data mono status
+		isMono = wrapper.getInt(first) == 1;
+		first += 4;
+
+		// Data encoded status
+		isEncoded = wrapper.getInt(first) == 1;
+		first += 4;
+
+		super.setProperties(playerName, data, isMono, isEncoded);
 		return this;
 	}
 
@@ -44,11 +53,19 @@ public class PlayerSpeakInfoMessageV10 extends VocalMessage {
 	public void setProperties(Object... properties) {
 		super.setProperties(properties);
 
+		int index = 0;
+
 		// Player's name
-		playerName = (String) properties[0];
+		playerName = (String) properties[index++];
 
 		// Player's audio sample
-		data = (byte[]) properties[1];
+		data = (byte[]) properties[index++];
+
+		// Data encoded status
+		isEncoded = (boolean) properties[index++];
+
+		// Data mono status
+		isMono = (boolean) properties[index++];
 	}
 
 	@Override
@@ -60,6 +77,12 @@ public class PlayerSpeakInfoMessageV10 extends VocalMessage {
 
 		// Player data
 		wrapper.put(data, true);
+
+		// Data mono status
+		wrapper.putInt(isMono ? 1 : 0);
+
+		// Data encoded status
+		wrapper.putInt(isEncoded ? 1 : 0);
 
 		return wrapper.get();
 	}
@@ -76,5 +99,19 @@ public class PlayerSpeakInfoMessageV10 extends VocalMessage {
 	 */
 	public byte[] getData() {
 		return data;
+	}
+
+	/**
+	 * @return True if the audio sample represented by the bytes array is a mono signal, false otherwise.
+	 */
+	public boolean isMono() {
+		return isMono;
+	}
+
+	/**
+	 * @return True if the audio sample represented by the bytes array is encoded, false otherwise.
+	 */
+	public boolean isEncoded() {
+		return isEncoded;
 	}
 }

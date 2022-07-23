@@ -10,6 +10,7 @@ import fr.pederobien.vocal.common.interfaces.IVocalHeader;
 public class PlayerSpeakSetMessageV10 extends VocalMessage {
 	private String playerName;
 	private byte[] data;
+	private boolean isMono, isEncoded;
 	private VolumeResult volume;
 
 	/**
@@ -38,6 +39,14 @@ public class PlayerSpeakSetMessageV10 extends VocalMessage {
 		data = wrapper.extract(first, playerDataLength);
 		first += playerDataLength;
 
+		// Data mono status
+		isMono = wrapper.getInt(first) == 1;
+		first += 4;
+
+		// Data encoded status
+		isEncoded = wrapper.getInt(first) == 1;
+		first += 4;
+
 		// Global volume
 		double global = wrapper.getDouble(first);
 		first += 8;
@@ -50,7 +59,7 @@ public class PlayerSpeakSetMessageV10 extends VocalMessage {
 		double right = wrapper.getDouble(first);
 
 		volume = new VolumeResult(global, left, right);
-		super.setProperties(playerName, data, volume);
+		super.setProperties(playerName, data, isMono, isEncoded, volume);
 		return this;
 	}
 
@@ -58,9 +67,22 @@ public class PlayerSpeakSetMessageV10 extends VocalMessage {
 	public void setProperties(Object... properties) {
 		super.setProperties(properties);
 
-		playerName = (String) properties[0];
-		data = (byte[]) properties[1];
-		volume = (VolumeResult) properties[2];
+		int index = 0;
+
+		// Player's name
+		playerName = (String) properties[index++];
+
+		// Player's data
+		data = (byte[]) properties[index++];
+
+		// Data mono status
+		isMono = (boolean) properties[index++];
+
+		// Data encoded status
+		isEncoded = (boolean) properties[index++];
+
+		// Data sound volume
+		volume = (VolumeResult) properties[index++];
 	}
 
 	@Override
@@ -72,6 +94,12 @@ public class PlayerSpeakSetMessageV10 extends VocalMessage {
 
 		// Player data
 		wrapper.put(data, true);
+
+		// Data mono status
+		wrapper.putInt(isMono ? 1 : 0);
+
+		// Data encoded status
+		wrapper.putInt(isEncoded ? 1 : 0);
 
 		// Global volume
 		wrapper.putDouble(volume.getGlobal());
@@ -97,6 +125,20 @@ public class PlayerSpeakSetMessageV10 extends VocalMessage {
 	 */
 	public byte[] getData() {
 		return data;
+	}
+
+	/**
+	 * @return True if the audio sample represented by the bytes array is a mono signal, false otherwise.
+	 */
+	public boolean isMono() {
+		return isMono;
+	}
+
+	/**
+	 * @return True if the audio sample represented by the bytes array is encoded, false otherwise.
+	 */
+	public boolean isEncoded() {
+		return isEncoded;
 	}
 
 	/**
