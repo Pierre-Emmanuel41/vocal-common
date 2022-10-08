@@ -2,6 +2,7 @@ package fr.pederobien.vocal.common.impl.messages.v10;
 
 import fr.pederobien.messenger.interfaces.IMessage;
 import fr.pederobien.utils.ByteWrapper;
+import fr.pederobien.utils.ReadableByteWrapper;
 import fr.pederobien.vocal.common.impl.VocalIdentifier;
 import fr.pederobien.vocal.common.impl.messages.VocalMessage;
 import fr.pederobien.vocal.common.interfaces.IVocalHeader;
@@ -23,9 +24,9 @@ public class SetCommunicationProtocolVersionV10 extends VocalMessage {
 		if (getHeader().isError())
 			return this;
 
-		ByteWrapper wrapper = ByteWrapper.wrap(payload);
+		ReadableByteWrapper wrapper = ReadableByteWrapper.wrap(payload);
 
-		version = wrapper.getFloat(0);
+		version = wrapper.nextFloat();
 		return this;
 	}
 

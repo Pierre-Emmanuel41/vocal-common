@@ -2,6 +2,7 @@ package fr.pederobien.vocal.common.impl.messages.v10;
 
 import fr.pederobien.messenger.interfaces.IMessage;
 import fr.pederobien.utils.ByteWrapper;
+import fr.pederobien.utils.ReadableByteWrapper;
 import fr.pederobien.vocal.common.impl.VocalIdentifier;
 import fr.pederobien.vocal.common.impl.VolumeResult;
 import fr.pederobien.vocal.common.impl.messages.VocalMessage;
@@ -24,39 +25,31 @@ public class PlayerSpeakSetMessageV10 extends VocalMessage {
 
 	@Override
 	public IMessage parse(byte[] payload) {
-		int first = 0;
-		ByteWrapper wrapper = ByteWrapper.wrap(payload);
+		if (payload.length == 0 || getHeader().isError())
+			return this;
+
+		ReadableByteWrapper wrapper = ReadableByteWrapper.wrap(payload);
 
 		// Player name
-		int playerNameLength = wrapper.getInt(first);
-		first += 4;
-		playerName = wrapper.getString(first, playerNameLength);
-		first += playerNameLength;
+		playerName = wrapper.nextString(wrapper.nextInt());
 
 		// Player data
-		int playerDataLength = wrapper.getInt(first);
-		first += 4;
-		data = wrapper.extract(first, playerDataLength);
-		first += playerDataLength;
+		data = wrapper.next(wrapper.nextInt());
 
 		// Data mono status
-		isMono = wrapper.getInt(first) == 1;
-		first += 4;
+		isMono = wrapper.nextInt() == 1;
 
 		// Data encoded status
-		isEncoded = wrapper.getInt(first) == 1;
-		first += 4;
+		isEncoded = wrapper.nextInt() == 1;
 
 		// Global volume
-		double global = wrapper.getDouble(first);
-		first += 8;
+		double global = wrapper.nextDouble();
 
 		// Left volume
-		double left = wrapper.getDouble(first);
-		first += 8;
+		double left = wrapper.nextDouble();
 
 		// Right volume
-		double right = wrapper.getDouble(first);
+		double right = wrapper.nextDouble();
 
 		volume = new VolumeResult(global, left, right);
 		super.setProperties(playerName, data, isMono, isEncoded, volume);

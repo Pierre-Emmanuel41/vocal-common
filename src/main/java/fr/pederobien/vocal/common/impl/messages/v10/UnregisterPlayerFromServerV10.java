@@ -3,6 +3,7 @@ package fr.pederobien.vocal.common.impl.messages.v10;
 import fr.pederobien.messenger.interfaces.IHeader;
 import fr.pederobien.messenger.interfaces.IMessage;
 import fr.pederobien.utils.ByteWrapper;
+import fr.pederobien.utils.ReadableByteWrapper;
 import fr.pederobien.vocal.common.impl.VocalIdentifier;
 import fr.pederobien.vocal.common.impl.messages.VocalMessage;
 
@@ -23,15 +24,10 @@ public class UnregisterPlayerFromServerV10 extends VocalMessage {
 		if (payload.length == 0 || getHeader().isError())
 			return this;
 
-		int first = 0;
-		ByteWrapper wrapper = ByteWrapper.wrap(payload);
+		ReadableByteWrapper wrapper = ReadableByteWrapper.wrap(payload);
 
 		// Player's name
-		int playerNameLength = wrapper.getInt(first);
-		first += 4;
-		name = wrapper.getString(first, playerNameLength);
-		first += playerNameLength;
-		first += 4;
+		name = wrapper.nextString(wrapper.nextInt());
 
 		super.setProperties(name);
 		return this;

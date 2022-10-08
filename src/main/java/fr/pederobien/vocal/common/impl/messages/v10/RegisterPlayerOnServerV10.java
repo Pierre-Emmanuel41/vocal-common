@@ -6,6 +6,7 @@ import java.util.List;
 import fr.pederobien.messenger.interfaces.IHeader;
 import fr.pederobien.messenger.interfaces.IMessage;
 import fr.pederobien.utils.ByteWrapper;
+import fr.pederobien.utils.ReadableByteWrapper;
 import fr.pederobien.vocal.common.impl.VocalIdentifier;
 import fr.pederobien.vocal.common.impl.messages.VocalMessage;
 import fr.pederobien.vocal.common.impl.messages.v10.model.PlayerInfo;
@@ -28,25 +29,19 @@ public class RegisterPlayerOnServerV10 extends VocalMessage {
 			return this;
 
 		List<Object> properties = new ArrayList<Object>();
-		int first = 0;
-		ByteWrapper wrapper = ByteWrapper.wrap(payload);
+		ReadableByteWrapper wrapper = ReadableByteWrapper.wrap(payload);
 
 		// Player's name
-		int playerNameLength = wrapper.getInt(first);
-		first += 4;
-		String name = wrapper.getString(first, playerNameLength);
+		String name = wrapper.nextString(wrapper.nextInt());
 		properties.add(name);
-		first += playerNameLength;
 
 		// Player's mute status
-		boolean isMute = wrapper.getInt(first) == 1;
+		boolean isMute = wrapper.nextInt() == 1;
 		properties.add(isMute);
-		first += 4;
 
 		// Player's deafen status
-		boolean isDeafen = wrapper.getInt(first) == 1;
+		boolean isDeafen = wrapper.nextInt() == 1;
 		properties.add(isDeafen);
-		first += 4;
 
 		playerInfo = new PlayerInfo(name, isMute, isDeafen, false);
 		super.setProperties(properties.toArray());

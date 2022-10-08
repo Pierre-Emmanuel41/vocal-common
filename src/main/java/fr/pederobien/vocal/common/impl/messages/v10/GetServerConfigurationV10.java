@@ -8,6 +8,7 @@ import java.util.Map;
 import fr.pederobien.messenger.interfaces.IHeader;
 import fr.pederobien.messenger.interfaces.IMessage;
 import fr.pederobien.utils.ByteWrapper;
+import fr.pederobien.utils.ReadableByteWrapper;
 import fr.pederobien.vocal.common.impl.VocalIdentifier;
 import fr.pederobien.vocal.common.impl.messages.VocalMessage;
 import fr.pederobien.vocal.common.impl.messages.v10.model.PlayerInfo;
@@ -32,36 +33,28 @@ public class GetServerConfigurationV10 extends VocalMessage {
 			return this;
 
 		List<Object> properties = new ArrayList<Object>();
-		int first = 0;
-		ByteWrapper wrapper = ByteWrapper.wrap(payload);
+		ReadableByteWrapper wrapper = ReadableByteWrapper.wrap(payload);
 
 		// Number of players
-		int numberOfChannelPlayers = wrapper.getInt(first);
+		int numberOfChannelPlayers = wrapper.nextInt();
 		properties.add(numberOfChannelPlayers);
-		first += 4;
 
 		for (int j = 0; j < numberOfChannelPlayers; j++) {
 			// Player's name
-			int playerNameLength = wrapper.getInt(first);
-			first += 4;
-			String playerName = wrapper.getString(first, playerNameLength);
+			String playerName = wrapper.nextString(wrapper.nextInt());
 			properties.add(playerName);
-			first += playerNameLength;
 
 			// Player's mute status
-			boolean isMute = wrapper.getInt(first) == 1;
+			boolean isMute = wrapper.nextInt() == 1;
 			properties.add(isMute);
-			first += 4;
 
 			// Player's deafen status
-			boolean isDeafen = wrapper.getInt(first) == 1;
+			boolean isDeafen = wrapper.nextInt() == 1;
 			properties.add(isDeafen);
-			first += 4;
 
 			// Player's muteBy status
-			boolean isMuteByMainPlayer = wrapper.getInt(first) == 1;
+			boolean isMuteByMainPlayer = wrapper.nextInt() == 1;
 			properties.add(isMuteByMainPlayer);
-			first += 4;
 
 			serverInfo.put(playerName, new PlayerInfo(playerName, isMute, isDeafen, isMuteByMainPlayer));
 		}

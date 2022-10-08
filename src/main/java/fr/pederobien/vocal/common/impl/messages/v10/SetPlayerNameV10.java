@@ -2,6 +2,7 @@ package fr.pederobien.vocal.common.impl.messages.v10;
 
 import fr.pederobien.messenger.interfaces.IMessage;
 import fr.pederobien.utils.ByteWrapper;
+import fr.pederobien.utils.ReadableByteWrapper;
 import fr.pederobien.vocal.common.impl.VocalIdentifier;
 import fr.pederobien.vocal.common.impl.messages.VocalMessage;
 import fr.pederobien.vocal.common.interfaces.IVocalHeader;
@@ -23,20 +24,13 @@ public class SetPlayerNameV10 extends VocalMessage {
 		if (getHeader().isError())
 			return this;
 
-		int first = 0;
-		ByteWrapper wrapper = ByteWrapper.wrap(payload);
+		ReadableByteWrapper wrapper = ReadableByteWrapper.wrap(payload);
 
 		// Old player's name
-		int oldNameLength = wrapper.getInt(first);
-		first += 4;
-		oldName = wrapper.getString(first, oldNameLength);
-		first += oldNameLength;
+		oldName = wrapper.nextString(wrapper.nextInt());
 
 		// New player's name
-		int newNameLength = wrapper.getInt(first);
-		first += 4;
-		newName = wrapper.getString(first, newNameLength);
-		first += newNameLength;
+		newName = wrapper.nextString(wrapper.nextInt());
 
 		super.setProperties(oldName, newName);
 		return this;

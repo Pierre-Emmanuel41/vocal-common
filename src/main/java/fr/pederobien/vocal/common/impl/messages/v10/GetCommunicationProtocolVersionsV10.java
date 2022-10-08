@@ -5,6 +5,7 @@ import java.util.List;
 
 import fr.pederobien.messenger.interfaces.IMessage;
 import fr.pederobien.utils.ByteWrapper;
+import fr.pederobien.utils.ReadableByteWrapper;
 import fr.pederobien.vocal.common.impl.VocalIdentifier;
 import fr.pederobien.vocal.common.impl.messages.VocalMessage;
 import fr.pederobien.vocal.common.interfaces.IVocalHeader;
@@ -26,24 +27,20 @@ public class GetCommunicationProtocolVersionsV10 extends VocalMessage {
 		if (getHeader().isError())
 			return this;
 
-		int first = 0;
-		ByteWrapper wrapper = ByteWrapper.wrap(payload);
+		ReadableByteWrapper wrapper = ReadableByteWrapper.wrap(payload);
 		List<Object> properties = new ArrayList<Object>();
 
 		// When it is an answer
 		if (payload.length > 0) {
 			// Number of version
-			int numberOfVersions = wrapper.getInt(first);
-			first += 4;
+			int numberOfVersions = wrapper.nextInt();
 
 			versions = new float[numberOfVersions];
 
 			for (int i = 0; i < numberOfVersions; i++) {
 				// Version
-				float version = wrapper.getFloat(first);
-				versions[i] = version;
+				versions[i] = wrapper.nextFloat();
 				properties.add(versions);
-				first += 4;
 			}
 		}
 
