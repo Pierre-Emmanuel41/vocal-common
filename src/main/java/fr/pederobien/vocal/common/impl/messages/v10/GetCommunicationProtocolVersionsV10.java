@@ -36,12 +36,11 @@ public class GetCommunicationProtocolVersionsV10 extends VocalMessage {
 			int numberOfVersions = wrapper.nextInt();
 
 			versions = new float[numberOfVersions];
+			properties.add(versions);
 
-			for (int i = 0; i < numberOfVersions; i++) {
+			for (int i = 0; i < numberOfVersions; i++)
 				// Version
 				versions[i] = wrapper.nextFloat();
-				properties.add(versions);
-			}
 		}
 
 		super.setProperties(properties.toArray());
