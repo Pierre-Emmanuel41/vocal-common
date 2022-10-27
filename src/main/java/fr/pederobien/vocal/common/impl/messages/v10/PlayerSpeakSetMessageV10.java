@@ -1,5 +1,7 @@
 package fr.pederobien.vocal.common.impl.messages.v10;
 
+import java.time.LocalTime;
+
 import fr.pederobien.messenger.interfaces.IMessage;
 import fr.pederobien.utils.ByteWrapper;
 import fr.pederobien.utils.ReadableByteWrapper;
@@ -10,6 +12,7 @@ import fr.pederobien.vocal.common.interfaces.IVocalHeader;
 
 public class PlayerSpeakSetMessageV10 extends VocalMessage {
 	private String playerName;
+	private LocalTime time;
 	private byte[] data;
 	private boolean isMono, isEncoded;
 	private VolumeResult volume;
@@ -29,6 +32,20 @@ public class PlayerSpeakSetMessageV10 extends VocalMessage {
 			return this;
 
 		ReadableByteWrapper wrapper = ReadableByteWrapper.wrap(payload);
+
+		// Hour
+		byte hour = wrapper.next();
+
+		// Minute
+		byte minute = wrapper.next();
+
+		// Second
+		byte second = wrapper.next();
+
+		// Nano
+		int nano = wrapper.nextInt();
+
+		time = LocalTime.of(hour, minute, second, nano);
 
 		// Player name
 		playerName = wrapper.nextString(wrapper.nextInt());
@@ -52,7 +69,7 @@ public class PlayerSpeakSetMessageV10 extends VocalMessage {
 		double right = wrapper.nextDouble();
 
 		volume = new VolumeResult(global, left, right);
-		super.setProperties(playerName, data, isMono, isEncoded, volume);
+		super.setProperties(time, playerName, data, isMono, isEncoded, volume);
 		return this;
 	}
 
@@ -60,7 +77,13 @@ public class PlayerSpeakSetMessageV10 extends VocalMessage {
 	public void setProperties(Object... properties) {
 		super.setProperties(properties);
 
+		if (properties.length == 0 || getHeader().isError())
+			return;
+
 		int index = 0;
+
+		// Time stamp
+		time = (LocalTime) properties[index++];
 
 		// Player's name
 		playerName = (String) properties[index++];
@@ -81,6 +104,21 @@ public class PlayerSpeakSetMessageV10 extends VocalMessage {
 	@Override
 	protected byte[] generateProperties() {
 		ByteWrapper wrapper = ByteWrapper.create();
+
+		if (getProperties().length == 0 || getHeader().isError())
+			return wrapper.get();
+
+		// Hour
+		wrapper.put((byte) time.getHour());
+
+		// Minute
+		wrapper.put((byte) time.getMinute());
+
+		// Second
+		wrapper.put((byte) time.getSecond());
+
+		// Nano
+		wrapper.putInt(time.getNano());
 
 		// Player's name
 		wrapper.putString(playerName, true);
@@ -104,6 +142,13 @@ public class PlayerSpeakSetMessageV10 extends VocalMessage {
 		wrapper.putDouble(volume.getRight());
 
 		return wrapper.get();
+	}
+
+	/**
+	 * @return The time stamp at which this sample has been sent by the server.
+	 */
+	public LocalTime getTime() {
+		return time;
 	}
 
 	/**
