@@ -17,6 +17,11 @@ public enum VocalIdentifier {
 	 */
 	SET_CP_VERSION,
 
+	/**
+	 * Identifier of the message to get the server configuration.
+	 */
+	GET_SERVER_CONFIGURATION,
+
 	/*
 	 * Identifier of the message in order to join a vocal server.
 	 */
@@ -28,9 +33,9 @@ public enum VocalIdentifier {
 	SET_SERVER_LEAVE,
 
 	/**
-	 * Identifier of the message to get the server configuration.
+	 * Identifier of the message in order to To time-synchronize all clients with the server.
 	 */
-	GET_SERVER_CONFIGURATION,
+	SERVER_TIME_SYNCHRO,
 
 	/**
 	 * Identifier of the message to register a player on a vocal server.

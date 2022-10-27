@@ -24,6 +24,7 @@ public class ProtocolV10 extends Protocol {
 		register(new MessageCreator(VocalIdentifier.GET_SERVER_CONFIGURATION.name(), header -> new GetServerConfigurationV10((IVocalHeader) header)));
 		register(new MessageCreator(VocalIdentifier.SET_SERVER_JOIN.name(), header -> new SetServerJoinV10((IVocalHeader) header)));
 		register(new MessageCreator(VocalIdentifier.SET_SERVER_LEAVE.name(), header -> new SetServerLeaveV10((IVocalHeader) header)));
+		register(new MessageCreator(VocalIdentifier.SERVER_TIME_SYNCHRO.name(), header -> new ServerTimeSynchronizationMessageV10((IVocalHeader) header)));
 
 		// Player messages
 		register(new MessageCreator(VocalIdentifier.REGISTER_PLAYER_ON_SERVER.name(), header -> new RegisterPlayerOnServerV10((IVocalHeader) header)));
