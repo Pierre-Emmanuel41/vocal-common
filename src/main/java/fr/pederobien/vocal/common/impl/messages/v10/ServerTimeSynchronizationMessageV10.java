@@ -72,4 +72,10 @@ public class ServerTimeSynchronizationMessageV10 extends VocalMessage {
 		return wrapper.get();
 	}
 
+	/**
+	 * @return The remote time.
+	 */
+	public LocalTime getTime() {
+		return time;
+	}
 }
